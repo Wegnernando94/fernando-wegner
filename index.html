@@ -1,805 +1,1045 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fernando Wegner — QA Engineer</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%232c5364'/%3E%3Cstop offset='100%25' style='stop-color:%230f2027'/%3E%3C/linearGradient%3E%3ClinearGradient id='acc' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%23a8d8ea'/%3E%3Cstop offset='100%25' style='stop-color:%236bbfd8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23bg)'/%3E%3Cpolyline points='6,18 6,6 18,6' fill='none' stroke='%23a8d8ea' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.7'/%3E%3Cpolyline points='46,6 58,6 58,18' fill='none' stroke='%23a8d8ea' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.7'/%3E%3Cpolyline points='6,46 6,58 18,58' fill='none' stroke='%23a8d8ea' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.7'/%3E%3Cpolyline points='46,58 58,58 58,46' fill='none' stroke='%23a8d8ea' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.7'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-weight='700' text-anchor='middle' fill='url(%23acc)' letter-spacing='1'%3EFW%3C/text%3E%3Ccircle cx='32' cy='54' r='2.2' fill='%23a8d8ea' opacity='0.5'/%3E%3C/svg%3E">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fernando Wegner · Tecnologia, IA e DevOps</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="theme-color" content="#1b2838">
+  <meta name="description" content="Fernando Wegner: tecnologia, inteligência artificial, DevOps e qualidade de software. Blog, mentoria e consultoria.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
     :root {
-      --dark:        #0b1520;
-      --dark-2:      #152030;
-      --dark-3:      #1e3040;
-      --accent:      #4fc3f7;
-      --accent-dim:  #29b6f6;
-      --accent-glow: rgba(79,195,247,0.15);
-      --text:        #1e293b;
-      --text-light:  #64748b;
-      --text-lighter:#94a3b8;
-      --bg:          #f8fafc;
-      --bg-card:     #ffffff;
-      --border:      #e2e8f0;
-      --border-strong:#cbd5e1;
-      --green:  #10b981; --green-bg:  #d1fae5;
-      --blue:   #3b82f6; --blue-bg:   #dbeafe;
-      --purple: #8b5cf6; --purple-bg: #ede9fe;
-      --orange: #f97316; --orange-bg: #ffedd5;
-      --red:    #ef4444; --red-bg:    #fee2e2;
-      --teal:   #14b8a6; --teal-bg:   #ccfbf1;
+      --bg: #f6f8fb;
+      --bg-soft: #edf1f6;
+      --card: #ffffff;
+      --ink: #1b2838;
+      --muted: #687a8e;
+      --line: #dbe3ec;
+      --accent: #4a72a0;
+      --accent-dark: #345a85;
+      --shadow: 30, 55, 90;
+      --bs-body-bg: var(--bg);
+      --bs-body-color: var(--ink);
+      --bs-body-font-family: 'Inter', system-ui, sans-serif;
     }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); }
+    h1, h2, h3, .serif { font-family: 'Manrope', system-ui, sans-serif; font-weight: 600; letter-spacing: -.025em; }
+    em { font-style: normal; }
+    .display-3, .display-4, .display-5, .display-6 { font-weight: 600; letter-spacing: -.03em; }
+    .navbar-brand { font-weight: 700; letter-spacing: -.02em; }
+    section { padding: 6rem 0; scroll-margin-top: 60px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; color: var(--accent); font-weight: 600; }
+    .lead-muted { color: var(--muted); }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    .nav-wrap { background: rgba(246,248,251,.85); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .navbar-brand { font-family: 'Manrope', sans-serif; font-size: 1.25rem; color: var(--ink); }
+    .nav-link { color: var(--muted); font-size: .92rem; }
+    .nav-link:hover { color: var(--accent); }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-    }
+    .btn-main { background: var(--ink); color: var(--bg); border-radius: 999px; padding: .7rem 1.5rem; border: 0; }
+    .btn-main:hover { background: var(--accent-dark); color: #fff; }
+    .btn-ghost { border: 1px solid var(--ink); color: var(--ink); border-radius: 999px; padding: .7rem 1.5rem; }
+    .btn-ghost:hover { background: var(--ink); color: var(--bg); }
 
-    /* ANIMATE-IN — starts visible, JS adds animation only if supported */
-    .anim {
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .anim.out {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    .anim.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .hero { padding-top: 8rem; }
+    .hero h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1.05; }
+    .hero h1 em { color: var(--accent); }
+    .portrait { width: 100%; max-width: 380px; aspect-ratio: 4/5; object-fit: cover; border-radius: 200px 200px 24px 24px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(var(--shadow),.35); }
+    .chip { display: inline-block; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: .25rem .8rem; font-size: .8rem; color: var(--muted); margin: 0 .35rem .5rem 0; }
 
-    /* PAGE */
-    .page { max-width:860px; margin:0 auto; padding:32px 16px 72px; }
+    .soft { background: var(--bg-soft); }
+    .card-b { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 2rem; height: 100%; transition: transform .25s, box-shadow .25s; }
+    .card-b:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgba(var(--shadow),.4); }
+    .num { font-family: 'Manrope', sans-serif; color: var(--accent); font-size: 1.1rem; }
+    a.more { color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 500; }
+    a.more:hover { color: var(--accent-dark); }
 
-    /* ── HEADER ── */
-    .header {
-      background: var(--dark);
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-      margin-bottom: 24px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.32);
-    }
-    .hdr-grid {
-      position:absolute; inset:0;
-      background-image:
-        linear-gradient(rgba(79,195,247,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79,195,247,0.045) 1px, transparent 1px);
-      background-size: 42px 42px;
-      pointer-events:none;
-    }
-    .hdr-glow {
-      position:absolute; top:-90px; left:-90px;
-      width:380px; height:380px;
-      background:radial-gradient(circle, rgba(79,195,247,0.13) 0%, transparent 65%);
-      pointer-events:none;
-    }
-    .hdr-glow2 {
-      position:absolute; bottom:-70px; right:-70px;
-      width:300px; height:300px;
-      background:radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 65%);
-      pointer-events:none;
-    }
-    .hdr-inner { position:relative; z-index:1; padding:44px 48px 36px; }
+    .talk-img { width: 100%; height: 100%; min-height: 380px; max-height: 520px; object-fit: cover; object-position: 50% 62%; border-radius: 18px; border: 1px solid var(--line); }
+    .timeline { border-left: 1px solid var(--line); margin-left: .4rem; }
+    .t-item { position: relative; padding: 0 0 2.2rem 2rem; }
+    .t-item::before { content: ''; position: absolute; left: -6px; top: .45rem; width: 11px; height: 11px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+    .t-date { font-size: .78rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .t-item ul { color: var(--muted); font-size: .93rem; padding-left: 1.1rem; }
 
-    .hdr-eyebrow {
-      font-size:0.7rem; font-weight:600; letter-spacing:3.5px;
-      text-transform:uppercase; color:var(--accent);
-      display:flex; align-items:center; gap:8px; margin-bottom:12px;
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; font-family: 'Manrope', sans-serif; font-size: 1.6rem; transition: padding .25s, color .25s; }
+    .contact-link:hover { color: var(--accent); padding-left: .6rem; }
+    .contact-link span.arrow { font-family: 'Inter'; font-size: 1.1rem; }
+    .to-top { position: fixed; right: 1.25rem; bottom: 1.25rem; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--ink); font-size: 1.2rem; box-shadow: 0 10px 24px -12px rgba(var(--shadow),.45); opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity .25s, transform .25s, background .25s, color .25s; z-index: 1030; }
+    .to-top.show { opacity: 1; pointer-events: auto; transform: none; }
+    .to-top:hover { background: var(--ink); color: var(--bg); }
+    /* Animações de entrada (estilo slide) */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+    .reveal.from-left { transform: translateX(-40px); }
+    .reveal.zoom { transform: scale(.85); }
+    .reveal.in { opacity: 1; transform: none; }
+    .timeline { position: relative; border-left: 0; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; width: 1px; height: 0; background: var(--line); transition: height 2.2s ease .3s; }
+    .timeline.in::before { height: 100%; }
+    .t-item::before { transform: scale(0); transition: transform .5s cubic-bezier(.3,1.6,.5,1) calc(var(--d, 0s) + .3s); }
+    .t-item.in::before { transform: scale(1); }
+    .page { animation: pageIn .6s ease; }
+    @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .t-item::before, .timeline::before { transition: none !important; opacity: 1; transform: none; }
+      .timeline::before { height: 100%; }
+      .page { animation: none; }
     }
-    .hdr-eyebrow::before {
-      content:''; display:inline-block;
-      width:26px; height:1.5px; background:var(--accent);
-    }
-    .hdr-name {
-      font-family:'Syne',sans-serif;
-      font-size:2.6rem; font-weight:800;
-      color:#fff; letter-spacing:-1px; line-height:1.2;
-      padding-bottom:4px; overflow:visible;
-    }
-    .hdr-name span { color:var(--accent); }
-    .hdr-subtitle {
-      font-size:0.88rem; color:rgba(255,255,255,0.38);
-      margin-top:10px; letter-spacing:0.5px;
-    }
-
-    .hdr-badges {
-      display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;
-    }
-    .hdr-badge {
-      display:flex; align-items:center; gap:6px;
-      background:rgba(255,255,255,0.055);
-      border:1px solid rgba(255,255,255,0.09);
-      border-radius:100px; padding:6px 14px;
-      font-size:0.77rem; color:rgba(255,255,255,0.65);
-      transition:all 0.22s;
-    }
-    .hdr-badge:hover {
-      background:rgba(79,195,247,0.12);
-      border-color:rgba(79,195,247,0.28);
-      color:var(--accent);
-    }
-    .hdr-badge i { font-size:0.7rem; color:var(--accent); }
-
-    .hdr-divider {
-      height:1px;
-      background:linear-gradient(90deg, rgba(79,195,247,0.22), transparent);
-      margin: 26px 0 22px;
-    }
-    .hdr-contact { display:flex; flex-wrap:wrap; gap:18px; }
-    .contact-item {
-      display:flex; align-items:center; gap:8px;
-      font-size:0.81rem; color:rgba(255,255,255,0.5);
-      transition:color 0.2s;
-    }
-    .contact-item:hover { color:var(--accent); }
-    .contact-item i { color:var(--accent); font-size:0.76rem; }
-
-    /* ── SECTION ── */
-    .section { margin-bottom:28px; }
-    .sec-hdr {
-      display:flex; align-items:center; gap:12px; margin-bottom:18px;
-    }
-    .sec-icon {
-      width:34px; height:34px; border-radius:10px;
-      background:var(--dark); display:flex;
-      align-items:center; justify-content:center;
-      color:var(--accent); font-size:0.82rem; flex-shrink:0;
-    }
-    .sec-title {
-      font-family:'Syne',sans-serif;
-      font-size:0.98rem; font-weight:700; color:var(--text);
-    }
-    .sec-line { flex:1; height:1px; background:var(--border); }
-
-    /* ── SUMMARY ── */
-    .summary-card {
-      background:var(--bg-card); border:1px solid var(--border);
-      border-radius:14px; padding:22px 24px;
-      position:relative; overflow:hidden;
-    }
-    .summary-card::before {
-      content:''; position:absolute; left:0; top:0; bottom:0;
-      width:3px;
-      background:linear-gradient(180deg, var(--accent), #6366f1);
-      border-radius:3px 0 0 3px;
-    }
-    .summary-card p {
-      font-size:0.88rem; line-height:1.78;
-      color:var(--text-light); margin-bottom:9px;
-    }
-    .summary-card p:last-child { margin-bottom:0; }
-
-    /* ── FOCUS CARDS ── */
-    .focus-grid {
-      display:grid; grid-template-columns:repeat(4,1fr); gap:12px;
-    }
-    .focus-card {
-      background:var(--bg-card); border:1px solid var(--border);
-      border-radius:14px; padding:18px 10px;
-      text-align:center; transition:all 0.25s; cursor:default;
-    }
-    .focus-card:hover {
-      border-color:var(--accent);
-      box-shadow:0 0 0 4px var(--accent-glow), 0 8px 22px rgba(0,0,0,0.06);
-      transform:translateY(-3px);
-    }
-    .focus-card:hover .focus-icon { color:var(--accent); }
-    .focus-icon {
-      font-size:1.35rem; color:#334155;
-      margin-bottom:10px; transition:color 0.25s;
-    }
-    .focus-label {
-      font-size:0.74rem; font-weight:600;
-      color:var(--text-light); line-height:1.35;
-    }
-
-    /* ── TIMELINE ── */
-    .timeline { position:relative; padding-left:30px; }
-    .timeline::before {
-      content:''; position:absolute;
-      left:8px; top:10px; bottom:10px;
-      width:1.5px;
-      background:linear-gradient(180deg, var(--accent) 0%, var(--border) 100%);
-    }
-    .tl-item { position:relative; margin-bottom:24px; }
-    .tl-item:last-child { margin-bottom:0; }
-    .tl-dot {
-      position:absolute; left:-26px; top:8px;
-      width:13px; height:13px; border-radius:50%;
-      background:var(--bg-card); border:2px solid var(--border-strong);
-      z-index:1;
-    }
-    .tl-item.active .tl-dot {
-      background:var(--accent); border-color:var(--accent);
-      box-shadow:0 0 0 4px rgba(79,195,247,0.2);
-    }
-
-    .tl-card {
-      background:var(--bg-card); border:1px solid var(--border);
-      border-radius:14px; padding:20px 22px;
-      transition:border-color 0.25s, box-shadow 0.25s;
-    }
-    .tl-card:hover {
-      border-color:var(--border-strong);
-      box-shadow:0 4px 18px rgba(0,0,0,0.06);
-    }
-    .tl-item.active .tl-card {
-      border-color:rgba(79,195,247,0.22);
-      background:linear-gradient(135deg, rgba(79,195,247,0.025), #fff);
-    }
-
-    .tl-head {
-      display:flex; justify-content:space-between;
-      align-items:flex-start; gap:10px;
-      margin-bottom:6px; flex-wrap:wrap;
-    }
-    .job-title {
-      font-family:'Syne',sans-serif;
-      font-size:0.96rem; font-weight:700; color:var(--text);
-      display:flex; align-items:center; gap:8px;
-    }
-    .badge-current {
-      display:inline-flex; align-items:center; gap:4px;
-      background:var(--green-bg); color:var(--green);
-      font-size:0.62rem; font-weight:700;
-      padding:2px 8px; border-radius:100px;
-      letter-spacing:0.5px; text-transform:uppercase;
-    }
-    .badge-current::before {
-      content:''; width:5px; height:5px;
-      background:var(--green); border-radius:50%;
-      animation:blink 2s infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
-
-    .company-name {
-      font-size:0.82rem; font-weight:600; color:var(--accent-dim);
-    }
-    .period-pill {
-      font-size:0.73rem; color:var(--text-lighter);
-      background:var(--bg); border:1px solid var(--border);
-      padding:3px 10px; border-radius:100px;
-      white-space:nowrap; flex-shrink:0;
-    }
-    .job-desc {
-      font-size:0.83rem; color:var(--text-light);
-      line-height:1.65; margin:10px 0 12px;
-      padding-bottom:12px; border-bottom:1px solid var(--border);
-    }
-    .achievements { list-style:none; padding:0; display:flex; flex-direction:column; gap:5px; }
-    .achievements li {
-      font-size:0.82rem; color:var(--text-light);
-      line-height:1.6; padding-left:16px; position:relative;
-    }
-    .achievements li::before {
-      content:''; position:absolute; left:0; top:8px;
-      width:5px; height:5px; border-radius:50%;
-      background:var(--accent); opacity:0.55;
-    }
-
-    /* ── EDUCATION ── */
-    .edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-    .edu-card {
-      background:var(--bg-card); border:1px solid var(--border);
-      border-radius:14px; padding:18px 20px;
-      transition:border-color 0.25s, box-shadow 0.25s;
-    }
-    .edu-card:hover {
-      border-color:var(--border-strong);
-      box-shadow:0 4px 14px rgba(0,0,0,0.05);
-    }
-    .edu-degree {
-      font-family:'Syne',sans-serif;
-      font-size:0.87rem; font-weight:700; color:var(--text);
-      margin-bottom:4px; line-height:1.4;
-    }
-    .edu-school {
-      font-size:0.79rem; font-weight:600;
-      color:var(--accent-dim); margin-bottom:10px;
-    }
-    .edu-foot { display:flex; align-items:center; justify-content:space-between; }
-    .edu-period { font-size:0.74rem; color:var(--text-lighter); }
-    .edu-status {
-      font-size:0.68rem; font-weight:700;
-      padding:2px 9px; border-radius:100px;
-    }
-    .edu-status.cursando { background:var(--blue-bg); color:var(--blue); }
-    .edu-status.concluido { background:var(--green-bg); color:var(--green); }
-
-    /* ── CERTS ── */
-    .cert-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-    .cert-card {
-      background:var(--bg-card); border:1px solid var(--border);
-      border-radius:12px; padding:14px 10px;
-      text-align:center; transition:all 0.25s;
-    }
-    .cert-card:hover {
-      border-color:var(--accent);
-      box-shadow:0 0 0 3px var(--accent-glow);
-      transform:translateY(-2px);
-    }
-    .cert-icon { font-size:1.1rem; color:var(--accent-dim); margin-bottom:7px; }
-    .cert-name { font-size:0.74rem; font-weight:600; color:var(--text); line-height:1.3; }
-
-    /* ── SKILL TAGS ── */
-    .skills-wrap { display:flex; flex-direction:column; gap:14px; }
-    .skill-group {
-      background:var(--bg-card); border:1px solid var(--border);
-      border-radius:14px; padding:16px 18px;
-    }
-    .sg-title {
-      font-size:0.69rem; font-weight:700; text-transform:uppercase;
-      letter-spacing:1.8px; color:var(--text-lighter); margin-bottom:11px;
-    }
-    .tags { display:flex; flex-wrap:wrap; gap:7px; }
-    .tag {
-      display:inline-flex; align-items:center;
-      font-size:0.77rem; font-weight:500;
-      padding:4px 12px; border-radius:100px;
-      border:1px solid transparent;
-      transition:all 0.18s; cursor:default;
-    }
-    .tag:hover { transform:translateY(-1px); filter:brightness(1.06); }
-    .tag.green  { background:var(--green-bg);  color:#065f46; border-color:#a7f3d0; }
-    .tag.blue   { background:var(--blue-bg);   color:#1e40af; border-color:#bfdbfe; }
-    .tag.purple { background:var(--purple-bg); color:#5b21b6; border-color:#ddd6fe; }
-    .tag.orange { background:var(--orange-bg); color:#9a3412; border-color:#fed7aa; }
-    .tag.red    { background:var(--red-bg);    color:#991b1b; border-color:#fecaca; }
-    .tag.teal   { background:var(--teal-bg);   color:#115e59; border-color:#99f6e4; }
-
-    /* ── PDF BTN ── */
-    #pdf-btn {
-      position:fixed; top:22px; right:22px;
-      background:var(--dark); color:#fff;
-      border:1px solid rgba(79,195,247,0.28);
-      padding:10px 18px; border-radius:10px;
-      cursor:pointer; font-size:0.8rem; font-weight:600;
-      font-family:'Inter',sans-serif;
-      display:flex; align-items:center; gap:7px;
-      z-index:999;
-      box-shadow:0 4px 20px rgba(0,0,0,0.28);
-      transition:all 0.2s;
-    }
-    #pdf-btn:hover {
-      background:var(--dark-3); border-color:var(--accent);
-      box-shadow:0 0 0 3px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.28);
-    }
-    #pdf-btn i { color:var(--accent); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width:640px) {
-      .hdr-inner { padding:28px 22px 24px; }
-      .hdr-name { font-size:1.9rem; }
-      .focus-grid { grid-template-columns:repeat(2,1fr); }
-      .edu-grid { grid-template-columns:1fr; }
-      .cert-grid { grid-template-columns:repeat(2,1fr); }
-      .timeline { padding-left:22px; }
-      #pdf-btn { top:12px; right:12px; padding:8px 14px; font-size:0.75rem; }
-    }
-    @page {
-      size: A4;
-      margin: 12mm 14mm;
-    }
-
-    @media print {
-      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      body { background: #fff !important; }
-      .anim { opacity:1 !important; transform:none !important; }
-      #pdf-btn { display:none !important; }
-      .page { max-width:100% !important; padding:0 !important; margin:0 !important; }
-
-      .header { border-radius:0 !important; box-shadow:none !important; background:#0b1520 !important; margin-bottom:16px !important; page-break-inside:avoid; }
-      .hdr-grid, .hdr-glow, .hdr-glow2 { display:none !important; }
-      .hdr-inner { padding:24px 28px 20px !important; }
-      .hdr-name { font-size:2rem !important; }
-      .hdr-badges { margin-top:14px !important; gap:6px !important; }
-      .hdr-badge { padding:4px 10px !important; font-size:0.7rem !important; border:1px solid rgba(79,195,247,0.4) !important; background:rgba(79,195,247,0.08) !important; }
-      .hdr-divider { margin:16px 0 14px !important; }
-      .contact-item { font-size:0.76rem !important; }
-
-      .section { margin-bottom:16px !important; }
-      .sec-hdr { margin-bottom:10px !important; }
-      .sec-icon { background:#0b1520 !important; }
-
-      .summary-card { padding:14px 16px !important; border:1px solid #cbd5e1 !important; border-radius:8px !important; }
-      .summary-card p { font-size:0.82rem !important; line-height:1.65 !important; }
-      .summary-card::before { background:#29b6f6 !important; }
-
-      .focus-grid { gap:8px !important; }
-      .focus-card { padding:12px 8px !important; border:1px solid #cbd5e1 !important; border-radius:8px !important; }
-      .focus-label { font-size:0.7rem !important; }
-
-      .timeline { padding-left:22px !important; }
-      .timeline::before { background:#29b6f6 !important; }
-      .tl-item { margin-bottom:14px !important; page-break-inside:avoid; }
-      .tl-card { padding:14px 16px !important; border:1px solid #cbd5e1 !important; border-radius:8px !important; }
-      .tl-item.active .tl-card { border-color:rgba(79,195,247,0.4) !important; background:rgba(79,195,247,0.03) !important; }
-      .tl-item.active .tl-dot { background:#29b6f6 !important; border-color:#29b6f6 !important; box-shadow:none !important; }
-      .job-title { font-size:0.88rem !important; }
-      .job-desc { font-size:0.78rem !important; margin:8px 0 !important; padding-bottom:8px !important; }
-      .achievements li { font-size:0.76rem !important; line-height:1.5 !important; }
-      .achievements li::before { background:#29b6f6 !important; opacity:0.8 !important; }
-      .period-pill { font-size:0.68rem !important; border:1px solid #cbd5e1 !important; background:#f8fafc !important; }
-      .badge-current { background:#d1fae5 !important; color:#065f46 !important; }
-      .badge-current::before { animation:none !important; background:#10b981 !important; }
-
-      .edu-grid { gap:8px !important; }
-      .edu-card { padding:12px 14px !important; border:1px solid #cbd5e1 !important; border-radius:8px !important; }
-      .edu-status.cursando { background:#dbeafe !important; color:#1e40af !important; }
-      .edu-status.concluido { background:#d1fae5 !important; color:#065f46 !important; }
-
-      .cert-grid { gap:8px !important; }
-      .cert-card { padding:10px 8px !important; border:1px solid #cbd5e1 !important; border-radius:8px !important; }
-      .cert-name { font-size:0.7rem !important; }
-
-      .skills-wrap { gap:8px !important; }
-      .skill-group { padding:10px 14px !important; border:1px solid #cbd5e1 !important; border-radius:8px !important; page-break-inside:avoid; }
-      .tags { gap:5px !important; }
-      .tag { font-size:0.7rem !important; padding:2px 9px !important; }
-      .tag.green  { background:#d1fae5 !important; color:#065f46 !important; border-color:#a7f3d0 !important; }
-      .tag.blue   { background:#dbeafe !important; color:#1e40af !important; border-color:#bfdbfe !important; }
-      .tag.purple { background:#ede9fe !important; color:#5b21b6 !important; border-color:#ddd6fe !important; }
-      .tag.orange { background:#ffedd5 !important; color:#9a3412 !important; border-color:#fed7aa !important; }
-      .tag.red    { background:#fee2e2 !important; color:#991b1b !important; border-color:#fecaca !important; }
-      .tag.teal   { background:#ccfbf1 !important; color:#115e59 !important; border-color:#99f6e4 !important; }
-    }
+    .cv-wrap { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; justify-content: center; }
+    .cv-paper { position: relative; width: 190px; height: 250px; flex: none; }
+    .cv-paper .sheet { position: absolute; inset: 0; background: #ffffff; border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 20px 40px -24px rgba(var(--shadow),.45); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+    .cv-paper .sheet.back { transform: rotate(-7deg) translate(-10px, 6px); background: var(--bg-soft); }
+    .cv-paper .sheet.front { transform: rotate(3deg); padding: 1.3rem 1.1rem; }
+    .cv-paper:hover .sheet.back { transform: rotate(-12deg) translate(-22px, 8px); }
+    .cv-paper:hover .sheet.front { transform: rotate(0deg) translateY(-8px); }
+    .cv-paper .ln { height: 6px; border-radius: 3px; background: var(--line); margin-bottom: .55rem; }
+    .cv-paper .ln.t { height: 10px; width: 70%; background: var(--ink); opacity: .8; }
+    .cv-paper .ln.a { width: 40%; background: var(--accent); margin-bottom: 1rem; }
+    .cv-paper .tag { position: absolute; right: -10px; bottom: 18px; background: var(--accent); color: #fff; font-size: .7rem; font-weight: 600; letter-spacing: .1em; padding: .3rem .6rem; border-radius: 4px; }
+    /* Blog */
+    .search { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: .65rem 1.2rem; width: 100%; max-width: 340px; color: var(--ink); }
+    .search:focus { outline: none; border-color: var(--accent); }
+    .tag-btn { border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: .3rem .9rem; font-size: .82rem; color: var(--muted); margin: 0 .4rem .5rem 0; transition: all .2s; }
+    .tag-btn:hover, .tag-btn.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .post-card { display: block; text-decoration: none; color: inherit; }
+    .post-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px; margin-bottom: 1.2rem; }
+    .meta { font-size: .8rem; color: var(--muted); letter-spacing: .04em; }
+    .article { max-width: 720px; margin: 0 auto; }
+    .article .content { font-size: 1.08rem; line-height: 1.85; }
+    .article .content h2, .article .content h3 { margin: 2.4rem 0 1rem; }
+    .article .content a { color: var(--accent); }
+    .article .content img { max-width: 100%; border-radius: 12px; margin: 1rem 0; }
+    .article .content blockquote { border-left: 3px solid var(--accent); padding: .3rem 0 .3rem 1.3rem; margin: 2rem 0; font-family: 'Manrope', sans-serif; font-size: 1.3rem; color: var(--ink); }
+    .article .content pre { background: var(--ink); color: var(--bg); padding: 1.2rem; border-radius: 12px; font-size: .88rem; overflow-x: auto; }
+    .article .content code { background: var(--bg-soft); padding: .1rem .35rem; border-radius: 4px; font-size: .9em; color: var(--accent-dark); }
+    .article .content pre code { background: none; padding: 0; color: inherit; }
+    .article .content table { width: 100%; margin: 1.5rem 0; }
+    .article .content th, .article .content td { border-bottom: 1px solid var(--line); padding: .5rem; }
+    /* Mentoria */
+    .mentor-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: 55% 30%; border-radius: 24px 24px 200px 24px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(var(--shadow),.35); }
+    .plan { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 2.2rem; height: 100%; display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; }
+    .plan:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -28px rgba(var(--shadow),.45); }
+    .plan.featured { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .plan.featured .lead-muted, .plan.featured li { color: #a9b8c8; }
+    .plan .price { font-family: 'Manrope', sans-serif; font-size: 2.8rem; line-height: 1; }
+    .plan .price small { font-size: 1rem; font-family: 'Inter'; }
+    .plan ul { list-style: none; padding: 0; margin: 1.5rem 0 2rem; flex-grow: 1; }
+    .plan li { padding: .45rem 0 .45rem 1.6rem; position: relative; color: var(--muted); font-size: .95rem; }
+    .plan li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+    .plan.featured .btn-main { background: var(--bg); color: var(--ink); }
+    .plan.featured .btn-main:hover { background: var(--accent); color: #fff; }
+    .badge-pop { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .9rem; border-radius: 999px; font-weight: 600; }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-q { width: 100%; text-align: left; background: none; border: 0; padding: 1.4rem 0; display: flex; justify-content: space-between; gap: 1rem; font-family: 'Manrope', sans-serif; font-size: 1.25rem; color: var(--ink); }
+    .faq-q span.ic { transition: transform .3s; color: var(--accent); font-family: 'Inter'; }
+    .faq-item.open .faq-q span.ic { transform: rotate(45deg); }
+    .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+    .faq-item.open .faq-a { grid-template-rows: 1fr; }
+    .faq-a > div { overflow: hidden; color: var(--muted); line-height: 1.75; }
+    .faq-a p { padding-bottom: 1.4rem; margin: 0; }
+    .coffee { width: 72px; height: 72px; color: var(--accent); }
+    .coffee .steam { animation: steam 2.4s ease-in-out infinite; transform-origin: bottom; }
+    .coffee .steam:nth-of-type(2) { animation-delay: .4s; }
+    .coffee .steam:nth-of-type(3) { animation-delay: .8s; }
+    @keyframes steam { 0%, 100% { opacity: .2; transform: translateY(2px); } 50% { opacity: 1; transform: translateY(-3px); } }
+    .tabs { display: inline-flex; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: .3rem; gap: .2rem; flex-wrap: wrap; justify-content: center; }
+    .tabs button { border: 0; background: transparent; border-radius: 999px; padding: .55rem 1.4rem; color: var(--muted); font-weight: 500; transition: all .25s; }
+    .tabs button.on { background: var(--ink); color: var(--bg); }
+    .tab-panel { animation: tabIn .45s ease; }
+    @keyframes tabIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .plan .dur { font-size: .82rem; color: var(--accent); font-weight: 600; letter-spacing: .03em; }
+    .plan.featured .dur { color: #9cc0e6; }
+    /* Contato */
+    .status { display: inline-flex; align-items: center; gap: .55rem; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: .4rem 1rem; font-size: .85rem; color: var(--muted); }
+    .status .dot { width: 9px; height: 9px; border-radius: 50%; background: #5a9a5f; box-shadow: 0 0 0 0 rgba(90,154,95,.6); animation: pulse 2s infinite; }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 9px rgba(90,154,95,0); } 100% { box-shadow: 0 0 0 0 rgba(90,154,95,0); } }
+    .composer { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 2.2rem; box-shadow: 0 30px 60px -40px rgba(var(--shadow),.4); }
+    .composer label { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 600; margin-bottom: .6rem; display: block; }
+    .field { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: .6rem 0; font-size: 1.05rem; color: var(--ink); transition: border-color .25s; }
+    .field:focus { outline: none; border-color: var(--accent); }
+    textarea.field { resize: none; min-height: 110px; }
+    .pick { border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: .45rem 1rem; font-size: .9rem; color: var(--ink); margin: 0 .45rem .55rem 0; transition: all .2s; }
+    .pick:hover { border-color: var(--accent); }
+    .pick.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .send-row { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .channel { display: flex; align-items: center; gap: 1.1rem; padding: 1.15rem 1.3rem; background: var(--card); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; color: var(--ink); transition: transform .25s, border-color .25s, box-shadow .25s; margin-bottom: .9rem; }
+    .channel:hover { transform: translateX(6px); border-color: var(--accent); box-shadow: 0 16px 32px -24px rgba(var(--shadow),.5); color: var(--ink); }
+    .channel .ico { width: 48px; height: 48px; flex: none; border-radius: 14px; display: grid; place-items: center; font-size: 1.35rem; background: var(--bg-soft); color: var(--accent); transition: background .25s, color .25s; }
+    .channel:hover .ico { background: var(--accent); color: #fff; }
+    .channel .tt { font-weight: 600; }
+    .channel .sub { font-size: .85rem; color: var(--muted); }
+    .channel .go { margin-left: auto; color: var(--muted); transition: transform .25s, color .25s; }
+    .channel:hover .go { transform: translate(3px, -3px); color: var(--accent); }
+    .copy-btn { border: 0; background: var(--bg-soft); color: var(--ink); border-radius: 999px; padding: .35rem .8rem; font-size: .8rem; margin-left: auto; }
+    .copy-btn:hover { background: var(--ink); color: var(--bg); }
+    .toast-b { position: fixed; left: 50%; bottom: 2rem; transform: translate(-50%, 20px); background: var(--ink); color: var(--bg); padding: .7rem 1.3rem; border-radius: 999px; font-size: .9rem; opacity: 0; pointer-events: none; transition: all .3s; z-index: 1040; }
+    .toast-b.show { opacity: 1; transform: translate(-50%, 0); }
+    .steps-mini { counter-reset: st; list-style: none; padding: 0; margin: 0; }
+    .steps-mini li { counter-increment: st; display: flex; gap: 1rem; padding: .9rem 0; border-bottom: 1px dashed var(--line); color: var(--muted); }
+    .steps-mini li::before { content: counter(st); font-family: 'Manrope', sans-serif; color: var(--accent); font-size: 1.3rem; line-height: 1; min-width: 1.2rem; }
+    /* Idiomas */
+    .flag { width: 20px; height: 14px; border-radius: 3px; flex: none; box-shadow: 0 0 0 1px rgba(var(--shadow), .15); vertical-align: -2px; }
+    .lang-switch { position: relative; display: inline-block; }
+    .lang-current { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: .35rem .7rem; font-size: .75rem; font-weight: 600; color: var(--ink); letter-spacing: .04em; transition: border-color .2s; }
+    .lang-current:hover { border-color: var(--accent); }
+    .lang-current .chev { font-size: .65rem; color: var(--muted); transition: transform .25s; }
+    .lang-switch.open .chev { transform: rotate(180deg); }
+    .lang-menu { position: absolute; right: 0; top: calc(100% + .4rem); list-style: none; margin: 0; padding: .35rem; min-width: 150px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 18px 40px -20px rgba(var(--shadow), .35); opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .2s, transform .2s; z-index: 1050; }
+    .lang-switch.open .lang-menu { opacity: 1; transform: none; pointer-events: auto; }
+    .lang-menu button { display: flex; align-items: center; gap: .6rem; width: 100%; border: 0; background: transparent; padding: .5rem .65rem; border-radius: 10px; font-size: .88rem; color: var(--ink); text-align: left; }
+    .lang-menu button:hover { background: var(--bg-soft); }
+    @media (max-width: 991px) { .lang-menu { left: 0; right: auto; } }
+    /* Assinatura do header */
+    .sig { display: inline-flex; align-items: center; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.02rem; font-weight: 600; letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
+    .sig:hover { color: var(--ink); }
+    .sig .pr { color: var(--accent); margin-right: .5rem; transition: transform .25s; }
+    .sig:hover .pr { transform: translateX(3px); }
+    .sig .tx { display: inline-block; overflow: hidden; white-space: nowrap; width: 15ch; animation: typing 1.1s steps(15) .2s both; }
+    .sig .dt { color: var(--accent); }
+    .sig .cr { display: inline-block; width: .55ch; height: 1.1em; margin-left: 2px; background: var(--accent); animation: blink 1.1s step-end infinite; transform: translateY(1px); }
+    @keyframes typing { from { width: 0; } to { width: 15ch; } }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .sig .tx { animation: none; } .sig .cr { animation: none; } }
+    .type-cursor { display: inline-block; width: .08em; min-width: 3px; height: .9em; margin-left: .06em; background: var(--accent); vertical-align: -.08em; }
+    .type-cursor.done { animation: blink 1.1s step-end infinite; }
+    .type-ghost { visibility: hidden; }
+    @media (prefers-reduced-motion: reduce) { .type-cursor.done { animation: none; } }
+    .cv-btns { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .cv-btns .btn { white-space: nowrap; padding: .65rem 1.2rem; display: inline-flex; align-items: center; }
+    @media (min-width: 576px) { .cv-btns { flex-wrap: nowrap; } }
+    footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--muted); font-size: .85rem; }
   </style>
 </head>
 <body>
+  <div id="root"></div>
 
-<button id="pdf-btn" onclick="window.print()">
-  <i class="fa-solid fa-file-arrow-down"></i> Baixar PDF
-</button>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.6/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 
-<div class="page">
+  <script src="i18n.js"></script>
+  <script type="text/babel">
+    const LINKS = {
+      github: 'https://github.com/wegnernando94',
+      linkedin: 'https://www.linkedin.com/in/fernando-wegner-186235191',
+      email: 'mailto:wegnernando@gmail.com',
+    };
 
-  <!-- HEADER -->
-  <div class="header anim">
-    <div class="hdr-grid"></div>
-    <div class="hdr-glow"></div>
-    <div class="hdr-glow2"></div>
-    <div class="hdr-inner">
-      <div class="hdr-eyebrow">QA Engineer &amp; Automação</div>
-      <div class="hdr-name">Fernando <span>Wegner</span></div>
-      <div class="hdr-subtitle">Qualidade de Software · Testes · CI/CD · Segurança</div>
+    // Link do WhatsApp com mensagem pronta, de acordo com o lugar do site
+    const wa = text => 'https://wa.me/5541985066318?text=' + encodeURIComponent(text);
 
-      <div class="hdr-badges">
-        <div class="hdr-badge"><i class="fa-solid fa-shield-halved"></i> Pentest &amp; Segurança</div>
-        <div class="hdr-badge"><i class="fa-solid fa-robot"></i> Automação Web &amp; Mobile</div>
-        <div class="hdr-badge"><i class="fa-solid fa-code-branch"></i> CI/CD &amp; DevOps</div>
-        <div class="hdr-badge"><i class="fa-solid fa-chart-line"></i> Performance &amp; Monitoring</div>
-      </div>
+    // ---------- Idiomas ----------
+    const LANGS = ['pt', 'en', 'es'];
+    const LANG_NAMES = { pt: 'Português', en: 'English', es: 'Español' };
+    const Flag = ({ lang }) => (
+      <svg className="flag" viewBox="0 0 30 20" aria-hidden="true">
+        {lang === 'pt' && <>
+          <rect width="30" height="20" fill="#229e45" />
+          <path d="M15 2.5 27 10 15 17.5 3 10z" fill="#f8e509" />
+          <circle cx="15" cy="10" r="4.6" fill="#2b49a3" />
+          <path d="M10.6 9.2c3-.9 6.3-.5 8.9 1" stroke="#fff" strokeWidth=".8" fill="none" />
+        </>}
+        {lang === 'en' && <>
+          <rect width="30" height="20" fill="#fff" />
+          {[0, 2, 4, 6, 8, 10, 12].map(i => <rect key={i} y={i * 20 / 13} width="30" height={20 / 13} fill="#b22234" />)}
+          <rect width="13" height={20 / 13 * 7} fill="#3c3b6e" />
+        </>}
+        {lang === 'es' && <>
+          <rect width="30" height="20" fill="#c60b1e" />
+          <rect y="5" width="30" height="10" fill="#ffc400" />
+        </>}
+      </svg>
+    );
 
-      <div class="hdr-divider"></div>
+    const detectLang = () => {
+      try { const saved = localStorage.getItem('lang'); if (LANGS.includes(saved)) return saved; } catch (e) {}
+      const nav = (navigator.language || 'pt').slice(0, 2);
+      return LANGS.includes(nav) ? nav : 'pt';
+    };
+    const LangCtx = React.createContext(null);
+    const useT = () => React.useContext(LangCtx);
 
-      <div class="hdr-contact">
-        <div class="contact-item"><i class="fa-solid fa-envelope"></i> wegnernando@gmail.com</div>
-        <div class="contact-item"><i class="fa-brands fa-linkedin"></i> linkedin.com/in/fernando-wegner-186235191</div>
-        <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Curitiba, Brasil</div>
-        <div class="contact-item"><i class="fa-solid fa-phone"></i> (41) 98506-6318</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- RESUMO -->
-  <div class="section anim">
-    <div class="sec-hdr">
-      <div class="sec-icon"><i class="fa-solid fa-user"></i></div>
-      <div class="sec-title">Resumo Profissional</div>
-      <div class="sec-line"></div>
-    </div>
-    <div class="summary-card">
-      <p>Analista de Qualidade de Software com sólida experiência em garantir a excelência de produtos, atualmente QA Engineer na UEX Tecnologia. Anteriormente QA Pleno na Acom Sistemas e Vivensis, responsável por aplicar técnicas avançadas de testes manuais e automatizados, desde a análise de requisitos até a validação final.</p>
-      <p>Especialista na automação de testes ponta a ponta, análise de performance e testes de carga e estresse. Atuação inclui a integração de práticas de qualidade em pipelines de CI/CD e o monitoramento de ambientes em produção, sempre com foco em melhoria contínua e entregas de alto valor.</p>
-    </div>
-  </div>
+    // Título "digitado" letra por letra, com cursor piscando no fim.
+    // O texto restante fica invisível para a altura do título não pular.
+    function Typed({ parts, speed = 38, delay = 250 }) {
+      const full = parts.join('');
+      const reduce = React.useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
+      const [n, setN] = React.useState(reduce ? full.length : 0);
+      React.useEffect(() => {
+        if (reduce) return;
+        setN(0);
+        let id;
+        const start = setTimeout(() => {
+          id = setInterval(() => setN(v => { if (v >= full.length) { clearInterval(id); return v; } return v + 1; }), speed);
+        }, delay);
+        return () => { clearTimeout(start); clearInterval(id); };
+      }, [full]);
+      const cut = (str, from) => [str.slice(0, Math.max(0, Math.min(str.length, n - from))), str.slice(Math.max(0, Math.min(str.length, n - from)))];
+      const [b0, b1] = cut(parts[0], 0);
+      const [e0, e1] = cut(parts[1], parts[0].length);
+      const [a0, a1] = cut(parts[2], parts[0].length + parts[1].length);
+      const done = n >= full.length;
+      return (
+        <span aria-label={full}>
+          <span aria-hidden="true">
+            {b0}<em style={{color: 'var(--accent)'}}>{e0}</em>{a0}
+            <span className={'type-cursor' + (done ? ' done' : '')}></span>
+            <span className="type-ghost">{b1}<em>{e1}</em>{a1}</span>
+          </span>
+        </span>
+      );
+    }
 
-  <!-- FOCOS -->
-  <div class="section anim">
-    <div class="focus-grid">
-      <div class="focus-card">
-        <div class="focus-icon"><i class="fa-solid fa-shield-halved"></i></div>
-        <div class="focus-label">Segurança &amp; Pentest</div>
-      </div>
-      <div class="focus-card">
-        <div class="focus-icon"><i class="fa-solid fa-robot"></i></div>
-        <div class="focus-label">Automação Web &amp; Mobile</div>
-      </div>
-      <div class="focus-card">
-        <div class="focus-icon"><i class="fa-solid fa-code-branch"></i></div>
-        <div class="focus-label">CI/CD &amp; DevOps</div>
-      </div>
-      <div class="focus-card">
-        <div class="focus-icon"><i class="fa-solid fa-chart-line"></i></div>
-        <div class="focus-label">Performance &amp; Monitoramento</div>
-      </div>
-    </div>
-  </div>
+    const MENU = [['', 'home'], ['sobre', 'about'], ['blog', 'blog'], ['mentoria', 'mentoring'], ['consultoria', 'consulting'], ['contato', 'contact']];
 
-  <!-- EXPERIÊNCIA -->
-  <div class="section anim">
-    <div class="sec-hdr">
-      <div class="sec-icon"><i class="fa-solid fa-briefcase"></i></div>
-      <div class="sec-title">Experiência Profissional</div>
-      <div class="sec-line"></div>
-    </div>
+    const useRoute = () => {
+      const get = () => (location.hash.replace(/^#\/?/, '') || '');
+      const [r, setR] = React.useState(get());
+      React.useEffect(() => {
+        const h = () => { setR(get()); window.scrollTo(0, 0); };
+        window.addEventListener('hashchange', h);
+        return () => window.removeEventListener('hashchange', h);
+      }, []);
+      return r;
+    };
 
-    <div class="timeline">
+    const SKILLS = ['AI', 'Docker', 'Jenkins', 'Azure', 'CI/CD', 'Cloud', 'Grafana', 'Zabbix',
+      'Python', 'TypeScript', 'SQL', 'Cypress', 'Playwright', 'Postman', 'K6', 'Burp Suite', 'OWASP', 'Kali Linux'];
 
-      <div class="tl-item active">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-head">
-            <div>
-              <div class="job-title">QA Engineer <span class="badge-current">Atual</span></div>
-              <div class="company-name">UEX Tecnologia · Tempo integral</div>
-            </div>
-            <div class="period-pill">Jan 2026 — presente</div>
-          </div>
-          <div class="job-desc">Atuação sênior na engenharia de qualidade, liderando iniciativas estratégicas de automação, cobertura de testes e governança de qualidade em produtos de alto impacto.</div>
-          <ul class="achievements">
-            <li>Liderança técnica no mapeamento e implementação de novas features, desde análise de requisitos e regras de negócio até validação em produção.</li>
-            <li>Implementação e evolução de suítes automatizadas com PEST PHP, garantindo cobertura robusta em aplicações back-end.</li>
-            <li>Contract Testing com PACT para validação de contratos entre microsserviços e consistência nas integrações.</li>
-            <li>Monitoramento de cobertura de testes, identificando gaps críticos e propondo estratégias alinhadas às metas de qualidade.</li>
-            <li>Colaboração direta com liderança na definição de critérios de aceite, DoD e estratégias de teste por sprint.</li>
-            <li>Revisão e fortalecimento do pipeline de CI/CD, assegurando execução automática de testes a cada deploy.</li>
-            <li>Disseminação de cultura de qualidade via code reviews, workshops internos e documentação de boas práticas.</li>
-            <li>Análise e rastreabilidade de bugs críticos, priorizando resoluções por impacto no negócio.</li>
-            <li>Testes de segurança com Burp Suite seguindo a metodologia OWASP, identificando e validando vulnerabilidades nas aplicações de forma estruturada.</li>
-            <li>Utilização do HexStrike para testes de segurança éticos no sistema, com foco na detecção de flags e possíveis falhas críticas de infraestrutura e aplicação.</li>
-            <li>Uso estratégico de IA como apoio na análise de cobertura, geração de cenários de teste e identificação de padrões de falha, elevando a eficiência e profundidade das validações.</li>
+    const closeMenu = () => {
+      const el = document.getElementById('menu');
+      if (el && el.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(el).hide();
+    };
+
+    function LangSwitch() {
+      const { lang, setLang } = useT();
+      const [open, setOpen] = React.useState(false);
+      const ref = React.useRef(null);
+      React.useEffect(() => {
+        if (!open) return;
+        const close = e => { if (!ref.current.contains(e.target)) setOpen(false); };
+        const esc = e => { if (e.key === 'Escape') setOpen(false); };
+        document.addEventListener('click', close);
+        document.addEventListener('keydown', esc);
+        return () => { document.removeEventListener('click', close); document.removeEventListener('keydown', esc); };
+      }, [open]);
+      return (
+        <div className={'lang-switch' + (open ? ' open' : '')} ref={ref}>
+          <button className="lang-current" onClick={() => setOpen(!open)} aria-haspopup="listbox" aria-expanded={open} title={LANG_NAMES[lang]}>
+            <Flag lang={lang} /><span>{lang.toUpperCase()}</span><i className="bi bi-chevron-down chev"></i>
+          </button>
+          <ul className="lang-menu" role="listbox">
+            {LANGS.filter(l => l !== lang).map(l => (
+              <li key={l}>
+                <button role="option" onClick={() => { setLang(l); setOpen(false); closeMenu(); }}>
+                  <Flag lang={l} /><span>{LANG_NAMES[l]}</span>
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
-      </div>
+      );
+    }
 
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-head">
-            <div>
-              <div class="job-title">QA Pleno</div>
-              <div class="company-name">Acom Sistemas</div>
+    function Nav({ route }) {
+      const { t } = useT();
+      return (
+        <nav className="navbar navbar-expand-lg fixed-top nav-wrap">
+          <div className="container">
+            <a className="navbar-brand sig" href="#/" aria-label="Fernando Wegner"><span className="pr" aria-hidden="true">&gt;</span><span className="tx" aria-hidden="true">fernando<span className="dt">.</span>wegner</span><span className="cr" aria-hidden="true"></span></a>
+            <button className="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Menu">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="menu">
+              <ul className="navbar-nav ms-auto gap-lg-2 align-items-lg-center">
+                {MENU.map(([id, key]) => {
+                  const on = route === id || (id && route.startsWith(id + '/'));
+                  return <li className="nav-item" key={id}><a className={'nav-link' + (on ? ' active fw-semibold' : '')} style={on ? {color: 'var(--accent)'} : null} href={'#/' + id} onClick={closeMenu}>{t.menu[key]}</a></li>;
+                })}
+                <li className="nav-item ms-lg-3 my-2 my-lg-0"><LangSwitch /></li>
+              </ul>
             </div>
-            <div class="period-pill">Fev 2025 — Dez 2025</div>
           </div>
-          <div class="job-desc">Qualidade de sistemas desktop e web por meio de testes manuais e automatizados em projetos dos setores de food, fiscal e logístico.</div>
-          <ul class="achievements">
-            <li>Automação de aplicações desktop (Delphi) com TestComplete.</li>
-            <li>Automação de plataformas web com Cypress.</li>
-            <li>Validação de APIs com Postman para garantir integrações.</li>
-            <li>Criação de documentações para padronização dos fluxos de software.</li>
-            <li>Gestão de testes e issues em Jira e Azure (esteira de testes).</li>
-            <li>Verificações em banco de dados MySQL para validar a lógica do projeto.</li>
-          </ul>
-        </div>
-      </div>
+        </nav>
+      );
+    }
 
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-head">
-            <div>
-              <div class="job-title">QA Pleno</div>
-              <div class="company-name">Vivensis</div>
+    function Hero() {
+      const { t } = useT();
+      return (
+        <header className="hero pb-5">
+          <div className="container">
+            <div className="row align-items-center g-5">
+              <div className="col-lg-7">
+                <p className="eyebrow mb-3">{t.hero.eyebrow}</p>
+                <h1 className="mb-4"><Typed parts={t.hero.title} delay={1300} /></h1>
+                <p className="lead-muted fs-5 mb-4" style={{maxWidth: 560}}>{t.hero.text}</p>
+                <div className="d-flex flex-wrap gap-3">
+                  <a href="#/sobre" className="btn btn-main">{t.hero.about}</a>
+                  <a href={wa(t.hero.waMsg)} target="_blank" rel="noopener" className="btn btn-ghost">{t.hero.whatsapp}</a>
+                </div>
+              </div>
+              <div className="col-lg-5 text-lg-end">
+                <img className="portrait" src="assets/perfil.jpg" alt={t.common.portraitAlt} />
+              </div>
             </div>
-            <div class="period-pill">Mai 2024 — Fev 2025</div>
           </div>
-          <div class="job-desc">Garantia da qualidade dos produtos combinando testes manuais, automatizados e de segurança em análises abrangentes.</div>
-          <ul class="achievements">
-            <li>Execução de planos de teste com Postman (API) e Cypress (E2E).</li>
-            <li>Testes de penetração e análise de vulnerabilidades com Kali Linux, Burp Suite e Frida.</li>
-            <li>Integração de práticas de segurança ao pipeline de CI/CD com Jenkins.</li>
-            <li>Monitoramento de desempenho em produção com Grafana e Zabbix.</li>
-            <li>Testes mobile com Appium e integração de APIs via Swagger.</li>
-            <li>Criação de scripts de teste com TypeScript, JavaScript e Java.</li>
-          </ul>
-        </div>
-      </div>
+        </header>
+      );
+    }
 
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-head">
-            <div>
-              <div class="job-title">Mid-level Systems Analyst</div>
-              <div class="company-name">Nox Automação</div>
+    function Sobre() {
+      const { t, lang } = useT();
+      const a = t.about;
+      const cvs = [
+        { href: 'assets/Fernando_Wegner_CV.pdf', label: 'Português (PDF) ↓', l: 'pt' },
+        { href: 'assets/Fernando_Wegner_CV_EN.pdf', label: 'English (PDF) ↓', l: 'en' },
+      ];
+      if (lang !== 'pt') cvs.reverse();
+      return (
+        <>
+          <section style={{paddingTop: '8rem'}}>
+            <div className="container">
+              <div className="row align-items-center g-5">
+                <div className="col-lg-7">
+                  <p className="eyebrow reveal">{a.eyebrow}</p>
+                  <h1 className="display-4 mb-4"><Typed parts={a.title} /></h1>
+                  <p className="lead-muted fs-5 reveal" style={{'--d': '.35s'}}>{a.intro}</p>
+                </div>
+                <div className="col-lg-5 text-lg-end">
+                  <img className="portrait reveal zoom" style={{'--d': '.3s'}} src="assets/perfil.jpg" alt={t.common.portraitAlt} />
+                </div>
+              </div>
             </div>
-            <div class="period-pill">Mai 2022 — Dez 2023</div>
-          </div>
-          <ul class="achievements">
-            <li>Testes manuais com clientes finais para identificação e resolução de bugs.</li>
-            <li>SQL para correção de bugs no lado do cliente.</li>
-            <li>Design e personalização de sites na plataforma Nopcommerce.</li>
-            <li>Documentação de procedimentos e registros de mudanças.</li>
-            <li>Atuação com Delphi, DataSnap, Stored Procedure e C#.</li>
-          </ul>
-        </div>
-      </div>
+          </section>
 
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-head">
-            <div>
-              <div class="job-title">Technical Support &amp; Help-Desk Specialist</div>
-              <div class="company-name">Escriba</div>
+          <section className="soft">
+            <div className="container" style={{maxWidth: 860}}>
+              <p className="eyebrow reveal">{a.storyEyebrow}</p>
+              <h2 className="display-6 mb-5 reveal" style={{'--d': '.15s'}}>{a.storyTitle}</h2>
+              <div className="timeline reveal-line">
+                {a.story.map((c, i) => (
+                  <div className="t-item reveal from-left" style={{'--d': (0.3 + i * 0.3) + 's', paddingBottom: '3rem'}} key={c.year}>
+                    <div className="t-date">{c.year}</div>
+                    <h3 className="h3 mb-2">{c.title}</h3>
+                    <p className="lead-muted fs-6 mb-0" style={{lineHeight: 1.75}}>{c.text}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div class="period-pill">Dez 2022 — Mar 2023</div>
+          </section>
+
+          <section>
+            <div className="container" style={{maxWidth: 860}}>
+              <div className="cv-wrap">
+                <a href={cvs[0].href} download className="cv-paper reveal zoom" aria-label={a.cvAria}>
+                  <div className="sheet back"></div>
+                  <div className="sheet front">
+                    <div className="ln t"></div><div className="ln a"></div>
+                    {[90, 100, 80, 95, 60, 100, 85, 70, 90].map((w, i) => <div className="ln" key={i} style={{width: w + '%'}}></div>)}
+                    <span className="tag">PDF</span>
+                  </div>
+                </a>
+                <div style={{maxWidth: 500}}>
+                  <p className="eyebrow reveal">{a.cvEyebrow}</p>
+                  <h2 className="h1 mb-3 reveal" style={{'--d': '.15s'}}>{a.cvTitle}</h2>
+                  <p className="lead-muted reveal" style={{'--d': '.3s'}}>{a.cvText}</p>
+                  <div className="cv-btns mt-2 reveal" style={{'--d': '.45s'}}>
+                    {cvs.map((c, i) => (
+                      <a key={c.l} href={c.href} download className={'btn ' + (i === 0 ? 'btn-main' : 'btn-ghost')}>
+                        <Flag lang={c.l} /> <span className="ms-1">{c.label}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="soft">
+            <div className="container text-center" style={{maxWidth: 760}}>
+              <p className="serif fs-3 reveal" style={{lineHeight: 1.4}}>{a.quote}</p>
+              <a href="#/contato" className="btn btn-main mt-4 reveal" style={{'--d': '.2s'}}>{a.quoteBtn}</a>
+            </div>
+          </section>
+
+          <section>
+            <div className="container">
+              <div className="row g-5">
+                <div className="col-lg-5">
+                  <p className="eyebrow reveal">{a.eduEyebrow}</p>
+                  {a.edu.map((e, i) => <p key={e} className="lead-muted reveal" style={{'--d': (0.1 + i * 0.1) + 's'}}>{e}</p>)}
+                  <p className="eyebrow mt-4 reveal" style={{'--d': '.3s'}}>{a.certEyebrow}</p>
+                  <p className="lead-muted reveal" style={{'--d': '.4s'}}>{a.certs}</p>
+                  <p className="eyebrow mt-4 reveal" style={{'--d': '.5s'}}>{a.langEyebrow}</p>
+                  <p className="lead-muted reveal" style={{'--d': '.6s'}}>{a.langs}</p>
+                </div>
+                <div className="col-lg-7">
+                  <p className="eyebrow reveal">{a.toolsEyebrow}</p>
+                  <div>{SKILLS.map((s, i) => <span className="chip reveal zoom" style={{'--d': (0.2 + i * 0.05) + 's'}} key={s}>{s === 'AI' ? a.ai : s}</span>)}</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
+      );
+    }
+
+    function usePosts() {
+      const [posts, setPosts] = React.useState(null);
+      React.useEffect(() => {
+        fetch('posts/index.json', { cache: 'no-cache' }).then(r => r.json()).then(setPosts).catch(() => setPosts([]));
+      }, []);
+      return posts;
+    }
+
+    function useFmtDate() {
+      const { t } = useT();
+      return d => new Date(d + 'T12:00:00').toLocaleDateString(t.locale, { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    function Blog() {
+      const { t } = useT();
+      const b = t.blog;
+      const fmtDate = useFmtDate();
+      const posts = usePosts();
+      const [q, setQ] = React.useState('');
+      const [tag, setTag] = React.useState(null);
+      const tags = [...new Set((posts || []).flatMap(p => p.tags))].sort();
+      const term = q.trim().toLowerCase();
+      const list = (posts || []).filter(p =>
+        (!tag || p.tags.includes(tag)) &&
+        (!term || (p.title + ' ' + p.summary + ' ' + p.tags.join(' ')).toLowerCase().includes(term)));
+      return (
+        <section style={{paddingTop: "8rem"}}>
+          <div className="container">
+            <div className="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+              <div>
+                <p className="eyebrow">Blog</p>
+                <h2 className="display-6 mb-0">{b.title}</h2>
+              </div>
+              <input className="search" placeholder={b.search} value={q} onChange={e => setQ(e.target.value)} aria-label={b.search} />
+            </div>
+            {b.ptNotice && <p className="lead-muted mb-4" style={{fontSize: '.9rem'}}><Flag lang="pt" /> <span className="ms-1">{b.ptNotice}</span></p>}
+            {tags.length > 0 && (
+              <div className="mb-5">
+                <button className={'tag-btn' + (!tag ? ' on' : '')} onClick={() => setTag(null)}>{b.all}</button>
+                {tags.map(tg => <button key={tg} className={'tag-btn' + (tag === tg ? ' on' : '')} onClick={() => setTag(tg)}>{tg}</button>)}
+              </div>
+            )}
+            {posts === null ? <p className="lead-muted">{b.loading}</p>
+              : list.length === 0 ? <p className="lead-muted">{b.empty}</p>
+              : (
+              <div className="row g-4">
+                {list.map((p, i) => (
+                  <div className="col-md-6 col-lg-4" key={p.slug}>
+                    <a className="post-card card-b reveal in" style={{'--d': (i * 0.08) + 's'}} href={'#/blog/' + p.slug}>
+                      {p.cover && <img src={p.cover} alt="" loading="lazy" />}
+                      <p className="meta mb-2">{fmtDate(p.date)} · {p.readingTime} {b.read}</p>
+                      <h3 className="h4">{p.title}</h3>
+                      <p className="lead-muted">{p.summary}</p>
+                      <div>{p.tags.map(tg => <span className="chip" key={tg}>{tg}</span>)}</div>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          <ul class="achievements">
-            <li>SQL Server para atualizações e ajustes no servidor local do cliente.</li>
-            <li>Sistemas para cartórios extrajudiciais, repassando mudanças do TJ.</li>
-            <li>Monitoramento e verificação do sistema após atualizações.</li>
-          </ul>
+        </section>
+      );
+    }
+
+    function Post({ slug }) {
+      const { t } = useT();
+      const b = t.blog;
+      const fmtDate = useFmtDate();
+      const posts = usePosts();
+      const [html, setHtml] = React.useState(null);
+      React.useEffect(() => {
+        fetch('posts/' + encodeURIComponent(slug) + '.md', { cache: 'no-cache' })
+          .then(r => { if (!r.ok) throw 0; return r.text(); })
+          .then(src => setHtml(DOMPurify.sanitize(marked.parse(src.replace(/^---[\s\S]*?---\s*/, '')))))
+          .catch(() => setHtml(false));
+      }, [slug]);
+      const meta = (posts || []).find(p => p.slug === slug);
+      const related = meta ? posts.filter(p => p !== meta && p.tags.some(tg => meta.tags.includes(tg))).slice(0, 2) : [];
+      if (html === false) return (
+        <section style={{paddingTop: '8rem'}}><div className="container article">
+          <h2>{b.notFound}</h2><a className="more" href="#/blog">{b.back}</a>
+        </div></section>
+      );
+      return (
+        <section style={{paddingTop: '8rem'}}>
+          <article className="container article">
+            <a className="more" href="#/blog">{b.allPosts}</a>
+            {meta && (
+              <header className="mt-4 mb-5">
+                <p className="meta mb-3">{fmtDate(meta.date)} · {meta.readingTime} {b.read}</p>
+                <h1 className="display-5 mb-3">{meta.title}</h1>
+                <div>{meta.tags.map(tg => <span className="chip" key={tg}>{tg}</span>)}</div>
+                {meta.cover && <img src={meta.cover} alt="" className="w-100 mt-4" style={{borderRadius: 16}} />}
+              </header>
+            )}
+            {html === null ? <p className="lead-muted">{b.loading}</p>
+              : <div className="content" lang="pt-BR" dangerouslySetInnerHTML={{ __html: html }} />}
+            <hr className="my-5" style={{borderColor: 'var(--line)'}} />
+            <div className="d-flex justify-content-between flex-wrap gap-3">
+              <span className="lead-muted">{b.share}</span>
+              <a className="more" href={'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(location.href)} target="_blank" rel="noopener">{b.shareBtn}</a>
+            </div>
+            {related.length > 0 && (
+              <div className="mt-5">
+                <p className="eyebrow">{b.related}</p>
+                {related.map(p => <a key={p.slug} className="contact-link" style={{fontSize: '1.3rem'}} href={'#/blog/' + p.slug}>{p.title} <span className="arrow">→</span></a>)}
+              </div>
+            )}
+          </article>
+        </section>
+      );
+    }
+
+    function Home() {
+      const { t } = useT();
+      const h = t.home;
+      return (
+        <>
+          <Hero />
+          <section className="soft">
+            <div className="container">
+              <p className="eyebrow">{h.areasEyebrow}</p>
+              <h2 className="display-6 mb-5">{h.areasTitle}</h2>
+              <div className="row g-4">
+                {h.areas.map(([ti, d], i) => (
+                  <div className="col-md-6 col-lg-4" key={ti}>
+                    <div className="card-b">
+                      <span className="num">0{i + 1}</span>
+                      <h3 className="h5 mt-3">{ti}</h3>
+                      <p className="lead-muted mb-0">{d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section>
+            <div className="container">
+              <p className="eyebrow">{h.servicesEyebrow}</p>
+              <h2 className="display-6 mb-5">{h.servicesTitle}</h2>
+              <div className="row g-4">
+                {h.services.map(([ti, id, d]) => (
+                  <div className="col-md-4" key={id}>
+                    <div className="card-b d-flex flex-column">
+                      <h3 className="h4">{ti}</h3>
+                      <p className="lead-muted flex-grow-1">{d}</p>
+                      <a className="more" href={'#/' + id}>{t.common.learnMore}</a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section className="soft text-center">
+            <div className="container" style={{maxWidth: 640}}>
+              <h2 className="display-6 mb-3">{h.ctaTitle}</h2>
+              <p className="lead-muted mb-4">{h.ctaText}</p>
+              <a href="#/contato" className="btn btn-main">{h.ctaBtn}</a>
+            </div>
+          </section>
+        </>
+      );
+    }
+
+    function Faq({ items }) {
+      const [open, setOpen] = React.useState(0);
+      return (
+        <div>
+          {items.map(([q, a], i) => (
+            <div className="reveal" style={{'--d': (i * 0.06) + 's'}} key={q}>
+              <div className={'faq-item' + (open === i ? ' open' : '')}>
+                <button className="faq-q" onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i}>
+                  {q} <span className="ic">+</span>
+                </button>
+                <div className="faq-a"><div><p>{a}</p></div></div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      );
+    }
 
-    </div>
-  </div>
+    const CoffeeIcon = () => (
+      <svg className="coffee" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path className="steam" d="M22 8c-2 3 2 5 0 8" />
+        <path className="steam" d="M30 6c-2 3 2 5 0 8" />
+        <path className="steam" d="M38 8c-2 3 2 5 0 8" />
+        <path d="M12 24h36v14a14 14 0 0 1-14 14h-8a14 14 0 0 1-14-14z" />
+        <path d="M48 28h4a6 6 0 0 1 0 12h-4" />
+        <path d="M8 58h44" />
+      </svg>
+    );
 
-  <!-- FORMAÇÃO -->
-  <div class="section anim">
-    <div class="sec-hdr">
-      <div class="sec-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-      <div class="sec-title">Formação Acadêmica</div>
-      <div class="sec-line"></div>
-    </div>
-    <div class="edu-grid">
-      <div class="edu-card">
-        <div class="edu-degree">Pós-graduação em Cloud Computing</div>
-        <div class="edu-school">Unama</div>
-        <div class="edu-foot">
-          <span class="edu-period">2025 – 2026</span>
-          <span class="edu-status cursando">Cursando</span>
-        </div>
-      </div>
-      <div class="edu-card">
-        <div class="edu-degree">Tecnólogo em Análise e Desenvolvimento de Sistemas</div>
-        <div class="edu-school">UniCesumar</div>
-        <div class="edu-foot">
-          <span class="edu-period">2021 – 2024</span>
-          <span class="edu-status concluido">Concluído</span>
-        </div>
-      </div>
-    </div>
-  </div>
+    function Mentoria() {
+      const { t } = useT();
+      const m = t.mentoring;
+      const toPlans = () => document.getElementById('planos').scrollIntoView({ behavior: 'smooth' });
+      return (
+        <>
+          <section style={{paddingTop: '8rem'}}>
+            <div className="container">
+              <div className="row align-items-center g-5">
+                <div className="col-lg-6">
+                  <p className="eyebrow reveal">{m.eyebrow}</p>
+                  <h1 className="display-4 mb-4"><Typed parts={m.title} /></h1>
+                  <p className="lead-muted fs-5 mb-4 reveal" style={{'--d': '.3s'}}>{m.text}</p>
+                  <div className="d-flex flex-wrap gap-3 reveal" style={{'--d': '.45s'}}>
+                    <button className="btn btn-main" onClick={toPlans}>{m.seePlans}</button>
+                    <a href="#/contato/mentoria" className="btn btn-ghost">{m.request}</a>
+                  </div>
+                </div>
+                <div className="col-lg-6">
+                  <img className="mentor-img reveal zoom" style={{'--d': '.3s'}} src="assets/mentoria.jpg" alt={m.imgAlt} />
+                </div>
+              </div>
+            </div>
+          </section>
 
-  <!-- CERTIFICAÇÕES -->
-  <div class="section anim">
-    <div class="sec-hdr">
-      <div class="sec-icon"><i class="fa-solid fa-award"></i></div>
-      <div class="sec-title">Certificações</div>
-      <div class="sec-line"></div>
-    </div>
-    <div class="cert-grid">
-      <div class="cert-card">
-        <div class="cert-icon"><i class="fa-brands fa-git-alt"></i></div>
-        <div class="cert-name">Git &amp; Github</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon"><i class="fa-solid fa-code"></i></div>
-        <div class="cert-name">Lógica de Programação</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon"><i class="fa-solid fa-vial-circle-check"></i></div>
-        <div class="cert-name">Cypress</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon"><i class="fa-solid fa-cloud"></i></div>
-        <div class="cert-name">MultiCloud, DevOps e IA</div>
-      </div>
-    </div>
-  </div>
+          <section className="soft">
+            <div className="container">
+              <div className="row g-5 mb-5">
+                <div className="col-lg-5">
+                  <p className="eyebrow reveal">{m.specEyebrow}</p>
+                  <h2 className="display-6 reveal" style={{'--d': '.1s'}}>{m.specTitle}</h2>
+                </div>
+                <div className="col-lg-7">
+                  <p className="lead-muted fs-5 reveal" style={{'--d': '.2s'}}>{m.specText}</p>
+                </div>
+              </div>
+              <div className="row g-4">
+                {m.topics.map(([ti, d], i) => (
+                  <div className="col-md-6 col-lg-4" key={ti}>
+                    <div className="card-b reveal" style={{'--d': (i * 0.08) + 's'}}>
+                      <span className="num">0{i + 1}</span>
+                      <h3 className="h5 mt-3">{ti}</h3>
+                      <p className="lead-muted mb-0">{d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-  <!-- SKILLS -->
-  <div class="section anim">
-    <div class="sec-hdr">
-      <div class="sec-icon"><i class="fa-solid fa-layer-group"></i></div>
-      <div class="sec-title">Competências Técnicas</div>
-      <div class="sec-line"></div>
-    </div>
-    <div class="skills-wrap">
+          <section id="planos">
+            <div className="container">
+              <div className="text-center mb-5">
+                <p className="eyebrow reveal">{m.plansEyebrow}</p>
+                <h2 className="display-6 reveal" style={{'--d': '.1s'}}>{m.plansTitle}</h2>
+              </div>
+              <div className="row g-4 align-items-stretch">
+                {m.plans.map((p, i) => (
+                  <div className="col-lg-4" key={p.id}>
+                    <div className={'plan position-relative reveal' + (p.featured ? ' featured' : '')} style={{'--d': (0.15 + i * 0.15) + 's'}}>
+                      {p.featured && <span className="badge-pop">{m.popular}</span>}
+                      <h3 className="h4 mb-1">{p.name}</h3>
+                      <p className="lead-muted mb-4">{p.desc}</p>
+                      <div className="price">{p.price}</div>
+                      <small className="lead-muted mt-1">{p.note}</small>
+                      <ul>{p.items.map(it => <li key={it}>{it}</li>)}</ul>
+                      {p.id === 'empresarial'
+                        ? <a href={wa(m.waCompany)} target="_blank" rel="noopener" className="btn btn-ghost" style={{borderColor: 'currentColor'}}>{m.contactBtn}</a>
+                        : <a href={wa(m.waPlan(p.name, p.price))} target="_blank" rel="noopener" className="btn btn-main">{m.wantPlan} {p.name}</a>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-      <div class="skill-group">
-        <div class="sg-title">Automação &amp; Testes E2E</div>
-        <div class="tags">
-          <span class="tag green">Cypress</span>
-          <span class="tag green">Playwright</span>
-          <span class="tag green">Appium</span>
-          <span class="tag green">TestComplete</span>
-          <span class="tag green">PEST PHP</span>
-          <span class="tag green">Selenium</span>
-          <span class="tag green">Cucumber</span>
-          <span class="tag green">Robot Framework</span>
-          <span class="tag green">Appium</span>
-          <span class="tag green">Ranorex</span>
-        </div>
-      </div>
+          <section className="soft">
+            <div className="container" style={{maxWidth: 820}}>
+              <p className="eyebrow reveal">{t.common.faqEyebrow}</p>
+              <h2 className="display-6 mb-4 reveal" style={{'--d': '.1s'}}>{t.common.faqTitle}</h2>
+              <Faq items={m.faq} />
+            </div>
+          </section>
 
-      <div class="skill-group">
-        <div class="sg-title">API, Performance &amp; Contract Testing</div>
-        <div class="tags">
-          <span class="tag blue">Postman</span>
-          <span class="tag blue">JMeter</span>
-          <span class="tag blue">K6</span>
-          <span class="tag blue">Swagger</span>
-          <span class="tag blue">SoapUI</span>
-          <span class="tag blue">PACT</span>
-        </div>
-      </div>
+          <section className="text-center">
+            <div className="container" style={{maxWidth: 640}}>
+              <div className="reveal zoom"><CoffeeIcon /></div>
+              <h2 className="display-6 mt-3 mb-3 reveal" style={{'--d': '.15s'}}>{m.coffee}</h2>
+              <div className="d-flex flex-wrap justify-content-center gap-3 mt-4 reveal" style={{'--d': '.3s'}}>
+                <a href="#/contato/mentoria" className="btn btn-main">{m.request}</a>
+                <a href={wa(m.waGeneral)} target="_blank" rel="noopener" className="btn btn-ghost">{t.common.whatsappCta}</a>
+              </div>
+            </div>
+          </section>
+        </>
+      );
+    }
 
-      <div class="skill-group">
-        <div class="sg-title">Segurança &amp; Pentest</div>
-        <div class="tags">
-          <span class="tag red">Kali Linux</span>
-          <span class="tag red">Burp Suite</span>
-          <span class="tag red">Frida</span>
-          <span class="tag red">Teste de Penetração</span>
-          <span class="tag red">OWASP</span>
-          <span class="tag red">HexStrike</span>
-        </div>
-      </div>
+    function Consultoria() {
+      const { t } = useT();
+      const c = t.consulting;
+      const tabs = ['project', 'fixed', 'workshop'];
+      const [tab, setTab] = React.useState('project');
+      const toPlans = () => document.getElementById('valores').scrollIntoView({ behavior: 'smooth' });
+      return (
+        <>
+          <section style={{paddingTop: '8rem'}}>
+            <div className="container">
+              <div className="row align-items-center g-5">
+                <div className="col-lg-7">
+                  <p className="eyebrow reveal">{c.eyebrow}</p>
+                  <h1 className="display-4 mb-4"><Typed parts={c.title} /></h1>
+                  <p className="lead-muted fs-5 mb-4 reveal" style={{'--d': '.3s'}}>{c.text}</p>
+                  <div className="d-flex flex-wrap gap-3 reveal" style={{'--d': '.45s'}}>
+                    <button className="btn btn-main" onClick={toPlans}>{c.seePrices}</button>
+                    <a href="#/contato/consultoria" className="btn btn-ghost">{c.schedule}</a>
+                  </div>
+                </div>
+                <div className="col-lg-5">
+                  <img className="talk-img reveal zoom" style={{'--d': '.3s'}} src="assets/palestra.jpg" alt={c.imgAlt} />
+                </div>
+              </div>
+            </div>
+          </section>
 
-      <div class="skill-group">
-        <div class="sg-title">CI/CD, DevOps &amp; Monitoramento</div>
-        <div class="tags">
-          <span class="tag purple">Jenkins</span>
-          <span class="tag purple">Azure</span>
-          <span class="tag purple">Docker</span>
-          <span class="tag purple">Grafana</span>
-          <span class="tag purple">Zabbix</span>
-          <span class="tag purple">Jira</span>
-        </div>
-      </div>
+          <section className="soft">
+            <div className="container">
+              <div className="row g-5 mb-5">
+                <div className="col-lg-5">
+                  <p className="eyebrow reveal">{c.focusEyebrow}</p>
+                  <h2 className="display-6 reveal" style={{'--d': '.1s'}}>{c.focusTitle}</h2>
+                </div>
+                <div className="col-lg-7">
+                  <p className="lead-muted fs-5 reveal" style={{'--d': '.2s'}}>{c.focus1}</p>
+                  <p className="lead-muted reveal" style={{'--d': '.3s'}}>{c.focus2}</p>
+                </div>
+              </div>
+              <p className="eyebrow reveal">{c.blocksEyebrow}</p>
+              <div className="row g-4">
+                {c.blocks.map(([ti, d], i) => (
+                  <div className="col-md-6 col-lg-3" key={ti}>
+                    <div className="card-b reveal" style={{'--d': (i * 0.07) + 's'}}>
+                      <span className="num">0{i + 1}</span>
+                      <h3 className="h5 mt-3">{ti}</h3>
+                      <p className="lead-muted mb-0" style={{fontSize: '.95rem'}}>{d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-      <div class="skill-group">
-        <div class="sg-title">Linguagens &amp; Banco de Dados</div>
-        <div class="tags">
-          <span class="tag orange">JavaScript</span>
-          <span class="tag orange">TypeScript</span>
-          <span class="tag orange">Python</span>
-          <span class="tag orange">Java</span>
-          <span class="tag orange">PHP</span>
-          <span class="tag orange">Delphi</span>
-          <span class="tag orange">SQL / MySQL</span>
-          <span class="tag orange">PostgreSQL</span>
-          <span class="tag orange">MongoDB</span>
-          <span class="tag orange">SQLite</span>
-          
-        </div>
-      </div>
+          <section id="valores">
+            <div className="container">
+              <div className="text-center mb-5">
+                <p className="eyebrow reveal">{c.pricesEyebrow}</p>
+                <h2 className="display-6 mb-4 reveal" style={{'--d': '.1s'}}>{c.pricesTitle}</h2>
+                <div className="tabs reveal" style={{'--d': '.2s'}} role="tablist">
+                  {tabs.map(k => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{c.tabs[k]}</button>)}
+                </div>
+              </div>
+              <div className="row g-4 justify-content-center tab-panel" key={tab}>
+                {c.plans[tab].map(p => (
+                  <div className={p.wide ? 'col-lg-7' : 'col-lg-5'} key={p.name}>
+                    <div className={'plan position-relative' + (p.featured ? ' featured' : '')}>
+                      <h3 className="h4 mb-1">{p.name}</h3>
+                      <p className="lead-muted mb-4">{p.desc}</p>
+                      <div className="price">{p.price}</div>
+                      <small className="lead-muted mt-1">{p.note}</small>
+                      <p className="dur mt-3 mb-0">⏱ {p.dur}</p>
+                      <ul>{p.items.map(it => <li key={it}>{it}</li>)}</ul>
+                      <a href={wa(p.quote ? c.waWorkshop : c.waPlan(c.tabs[tab], p.name, p.price, p.note))}
+                        target="_blank" rel="noopener" className="btn btn-main">{p.quote ? c.requestQuote : c.wantThis}</a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-      <div class="skill-group">
-        <div class="sg-title">Metodologias &amp; Outras Techs</div>
-        <div class="tags">
-          <span class="tag teal">Metodologias Ágeis</span>
-          <span class="tag teal">Scrum / Kanban</span>
-          <span class="tag teal">Contract Testing</span>
-        </div>
-      </div>
+          <section className="soft">
+            <div className="container" style={{maxWidth: 820}}>
+              <p className="eyebrow reveal">{t.common.faqEyebrow}</p>
+              <h2 className="display-6 mb-4 reveal" style={{'--d': '.1s'}}>{t.common.faqTitle}</h2>
+              <Faq items={c.faq} />
+            </div>
+          </section>
 
-    </div>
-  </div>
+          <section className="text-center">
+            <div className="container" style={{maxWidth: 680}}>
+              <h2 className="display-6 mb-3 reveal">{c.ctaTitle}</h2>
+              <p className="lead-muted fs-5 reveal" style={{'--d': '.15s'}}>{c.ctaText}</p>
+              <div className="d-flex flex-wrap justify-content-center gap-3 mt-4 reveal" style={{'--d': '.3s'}}>
+                <a href="#/contato/consultoria" className="btn btn-main">{c.ctaBtn}</a>
+                <a href={wa(c.waGeneral)} target="_blank" rel="noopener" className="btn btn-ghost">{t.common.whatsappCta}</a>
+              </div>
+            </div>
+          </section>
+        </>
+      );
+    }
 
-</div>
+    function Contato({ topic: initial }) {
+      const { t } = useT();
+      const k = t.contact;
+      const [topic, setTopic] = React.useState(k.topics[initial] ? initial : null);
+      const [name, setName] = React.useState('');
+      const [msg, setMsg] = React.useState('');
+      const [toast, setToast] = React.useState('');
+      const ready = topic && name.trim() && msg.trim();
+      const text = k.compose(name.trim(), k.topics[topic] || '', msg.trim());
+      const showToast = s => { setToast(s); setTimeout(() => setToast(''), 2200); };
+      const copyEmail = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        const done = () => showToast(k.copied);
+        if (navigator.clipboard) navigator.clipboard.writeText('wegnernando@gmail.com').then(done, () => showToast('wegnernando@gmail.com'));
+        else showToast('wegnernando@gmail.com');
+      };
+      const channels = [
+        { ico: 'bi-whatsapp', t: 'WhatsApp', sub: k.waSub, href: wa(k.waMsg) },
+        { ico: 'bi-linkedin', t: 'LinkedIn', sub: k.liSub, href: LINKS.linkedin },
+        { ico: 'bi-github', t: 'GitHub', sub: k.ghSub, href: LINKS.github },
+      ];
+      return (
+        <>
+          <section style={{paddingTop: '9rem', paddingBottom: '3rem'}}>
+            <div className="container">
+              <div className="status reveal mb-4"><span className="dot"></span>{k.status}</div>
+              <h1 className="display-3 mb-3" style={{maxWidth: 820}}><Typed parts={k.title} /></h1>
+              <p className="lead-muted fs-5 reveal" style={{'--d': '.3s', maxWidth: 600}}>{k.text}</p>
+            </div>
+          </section>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Only animate if IntersectionObserver is supported
-  if ('IntersectionObserver' in window) {
-    const items = document.querySelectorAll('.anim');
-    // Mark as out (hidden) only after we know JS runs
-    items.forEach(el => el.classList.add('out'));
+          <section style={{paddingTop: 0}}>
+            <div className="container">
+              <div className="row g-5">
+                <div className="col-lg-7">
+                  <div className="composer reveal" style={{'--d': '.2s'}}>
+                    <div className="mb-4">
+                      <label>{k.step1}</label>
+                      {Object.entries(k.topics).map(([key, v]) => (
+                        <button key={key} type="button" className={'pick' + (topic === key ? ' on' : '')} onClick={() => setTopic(key)}>{v}</button>
+                      ))}
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="c-name">{k.step2}</label>
+                      <input id="c-name" className="field" placeholder={k.namePh} value={name} onChange={e => setName(e.target.value)} />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="c-msg">{k.step3}</label>
+                      <textarea id="c-msg" className="field" placeholder={k.msgPh} value={msg} onChange={e => setMsg(e.target.value)} />
+                    </div>
+                    <div className="send-row">
+                      <a className={'btn btn-main' + (ready ? '' : ' disabled')} aria-disabled={!ready}
+                         href={ready ? wa(text) : undefined} target="_blank" rel="noopener">
+                        <i className="bi bi-whatsapp me-2"></i>{k.sendWa}
+                      </a>
+                      <a className={'btn btn-ghost' + (ready ? '' : ' disabled')} aria-disabled={!ready}
+                         href={ready ? 'mailto:wegnernando@gmail.com?subject=' + encodeURIComponent(k.mailSubject + k.topics[topic]) + '&body=' + encodeURIComponent(text) : undefined}>
+                        <i className="bi bi-envelope me-2"></i>{k.sendMail}
+                      </a>
+                    </div>
+                    {!ready && <p className="lead-muted mt-3 mb-0" style={{fontSize: '.85rem'}}>{k.fill}</p>}
+                  </div>
+                </div>
 
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.remove('out');
+                <div className="col-lg-5">
+                  <p className="eyebrow reveal">{k.direct}</p>
+                  {channels.map((ch, i) => (
+                    <a key={ch.t} className="channel reveal from-left" style={{'--d': (0.25 + i * 0.12) + 's'}} href={ch.href} target="_blank" rel="noopener">
+                      <span className="ico"><i className={'bi ' + ch.ico}></i></span>
+                      <span><span className="tt d-block">{ch.t}</span><span className="sub">{ch.sub}</span></span>
+                      <i className="bi bi-arrow-up-right go"></i>
+                    </a>
+                  ))}
+                  <a className="channel reveal from-left" style={{'--d': '.61s'}} href={LINKS.email}>
+                    <span className="ico"><i className="bi bi-envelope"></i></span>
+                    <span><span className="tt d-block">E-mail</span><span className="sub">wegnernando@gmail.com</span></span>
+                    <button className="copy-btn" onClick={copyEmail}>{k.copy}</button>
+                  </a>
+
+                  <div className="mt-5 reveal" style={{'--d': '.7s'}}>
+                    <p className="eyebrow">{k.nextEyebrow}</p>
+                    <ol className="steps-mini">{k.next.map(n => <li key={n}>{n}</li>)}</ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div className={'toast-b' + (toast ? ' show' : '')} role="status">{toast}</div>
+        </>
+      );
+    }
+
+    function ToTop() {
+      const { t } = useT();
+      const [show, setShow] = React.useState(false);
+      React.useEffect(() => {
+        const onScroll = () => setShow(window.scrollY > 400);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+      return (
+        <button className={'to-top' + (show ? ' show' : '')} aria-label={t.common.backToTop}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>↑</button>
+      );
+    }
+
+    function useReveal(key) {
+      React.useEffect(() => {
+        const els = document.querySelectorAll('.reveal:not(.in), .reveal-line:not(.in)');
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+        els.forEach(el => io.observe(el));
+        return () => io.disconnect();
+      }, [key]);
+    }
+
+    function App() {
+      const route = useRoute();
+      const [lang, setLangState] = React.useState(detectLang);
+      const t = window.I18N[lang];
+      const setLang = l => { setLangState(l); try { localStorage.setItem('lang', l); } catch (e) {} };
+      React.useEffect(() => { document.documentElement.lang = t.htmlLang; document.title = t.meta.title; }, [lang]);
+      useReveal(route + lang);
+      const page = route === 'sobre' ? <Sobre />
+        : route === 'blog' ? <Blog />
+        : route.startsWith('blog/') ? <Post slug={route.slice(5)} />
+        : route === 'contato' || route.startsWith('contato/') ? <Contato topic={route.split('/')[1]} />
+        : route === 'mentoria' ? <Mentoria />
+        : route === 'consultoria' ? <Consultoria />
+        : <Home />;
+      return (
+        <LangCtx.Provider value={{ t, lang, setLang }}>
+          <Nav route={route} />
+          <main className="page" key={route + lang} style={{minHeight: '70vh'}}>{page}</main>
+          <footer><div className="container d-flex justify-content-between flex-wrap gap-2">
+            <span>© {new Date().getFullYear()} Fernando Wegner</span><span className="d-flex gap-4">
+              <a className="more" href={LINKS.github} target="_blank" rel="noopener">GitHub</a>
+              <a className="more" href={LINKS.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+              <a className="more" href={wa(t.footer.waMsg)} target="_blank" rel="noopener">WhatsApp</a>
+            </span>
+          </div></footer>
+          <ToTop />
+        </LangCtx.Provider>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+[
+  {
+    "slug": "qualidade-de-software-nao-comeca-no-codigo",
+    "title": "A Qualidade de Software Não Começa no Código",
+    "date": "2026-10-13",
+    "summary": "Os 4 pilares técnicos para dominar qualidade e automação no desenvolvimento moderno.",
+    "tags": [
+      "QA",
+      "Qualidade",
+      "Shift-Left",
+      "Automação"
+    ],
+    "cover": "assets/blog/qualidade-de-software-nao-comeca-no-codigo/capa.jpg",
+    "readingTime": 5
+  }
+]
